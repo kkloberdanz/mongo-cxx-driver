@@ -364,12 +364,10 @@ add_subdirectory(benchmark EXCLUDE_FROM_ALL)
 # CMake does not implement anything like 'dist' from autotools.
 # This implementation is based on the one in GnuCash.
 
-# PATCHED
-# add_subdirectory (cmake)
-# add_subdirectory (data)
-# add_subdirectory (docs)
-# add_subdirectory (etc)
-# PATCHED
+add_subdirectory (cmake)
+add_subdirectory (data)
+add_subdirectory (docs)
+add_subdirectory (etc)
 
 set (PACKAGE_PREFIX "mongo-cxx-driver-r${BUILD_VERSION}")
 set (DIST_FILE "${PACKAGE_PREFIX}.tar.gz")
