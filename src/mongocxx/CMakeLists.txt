@@ -14,8 +14,6 @@
 
 project(MONGOCXX)
 
-message("\n\n\n\n\n\nHELLO THERE\n\n\n\n\n\n")
-
 ParseVersion (${BUILD_VERSION} MONGOCXX)
 # TODO: read from file
 set(MONGOCXX_ABI_VERSION _noabi)
