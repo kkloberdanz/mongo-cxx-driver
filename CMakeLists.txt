@@ -348,6 +348,11 @@ if (ENABLE_TESTS)
     enable_testing()
 endif ()
 
+# PATCHED
+set(MONGO_CXX_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(MONGO_CXX_PROJECT_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
+# PATCHED
+
 add_subdirectory(src)
 
 add_subdirectory(examples EXCLUDE_FROM_ALL)
@@ -359,10 +364,12 @@ add_subdirectory(benchmark EXCLUDE_FROM_ALL)
 # CMake does not implement anything like 'dist' from autotools.
 # This implementation is based on the one in GnuCash.
 
-add_subdirectory (cmake)
-add_subdirectory (data)
-add_subdirectory (docs)
-add_subdirectory (etc)
+# PATCHED
+# add_subdirectory (cmake)
+# add_subdirectory (data)
+# add_subdirectory (docs)
+# add_subdirectory (etc)
+# PATCHED
 
 set (PACKAGE_PREFIX "mongo-cxx-driver-r${BUILD_VERSION}")
 set (DIST_FILE "${PACKAGE_PREFIX}.tar.gz")
