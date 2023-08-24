@@ -72,6 +72,11 @@ set(BSONCXX_VERSION ${BSONCXX_VERSION_NO_EXTRA}${BSONCXX_VERSION_EXTRA})
 message ("bsoncxx version: ${BSONCXX_VERSION}")
 set(BSONCXX_INLINE_NAMESPACE "v${BSONCXX_ABI_VERSION}")
 
+# Package managers such as Conan expect packages to be at the top level of the
+# include directory, and having packages under the v_noabi directory causes
+# trouble for package managers that then needs to be patched during the build.
+# Having this as a configure time option makes it so package managers no longer
+# need to have a patch for changing this.
 if (MONGO_INSTALL_AT_TOP_LEVEL)
   set(BSONCXX_HEADER_INSTALL_DIR "${CMAKE_INSTALL_INCLUDEDIR}" CACHE INTERNAL "")
 else()
