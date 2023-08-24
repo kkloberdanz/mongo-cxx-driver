@@ -348,11 +348,6 @@ if (ENABLE_TESTS)
     enable_testing()
 endif ()
 
-# PATCHED
-set(MONGO_CXX_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(MONGO_CXX_PROJECT_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
-# PATCHED
-
 add_subdirectory(src)
 
 add_subdirectory(examples EXCLUDE_FROM_ALL)
