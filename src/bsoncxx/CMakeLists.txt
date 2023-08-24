@@ -99,7 +99,6 @@ if(TARGET bson_shared OR TARGET bson_static)
   endif()
 else()
   # Attempt to find libbson by new package name (without lib).
-
   find_package(bson-${LIBBSON_REQUIRED_ABI_VERSION} REQUIRED)
 
   if(bson-${LIBBSON_REQUIRED_ABI_VERSION}_FOUND)
