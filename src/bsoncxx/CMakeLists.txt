@@ -100,11 +100,7 @@ if(TARGET bson_shared OR TARGET bson_static)
 else()
   # Attempt to find libbson by new package name (without lib).
 
-  # PATCHED
-  # find_package(bson-${LIBBSON_REQUIRED_ABI_VERSION} ${LIBBSON_REQUIRED_VERSION} QUIET)
   find_package(bson-${LIBBSON_REQUIRED_ABI_VERSION} REQUIRED)
-  set(bson-${LIBBSON_REQUIRED_ABI_VERSION}_FOUND TRUE)
-  # PATCHED
 
   if(bson-${LIBBSON_REQUIRED_ABI_VERSION}_FOUND)
     message ("found libbson version ${bson-${LIBBSON_REQUIRED_ABI_VERSION}_VERSION}")
