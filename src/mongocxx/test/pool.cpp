@@ -22,6 +22,7 @@
 #include <mongocxx/options/tls.hpp>
 #include <mongocxx/pool.hpp>
 #include <mongocxx/private/libmongoc.hh>
+#include <mongocxx/test/client_helpers.hh>
 #include <third_party/catch/include/helpers.hpp>
 
 #include <mongocxx/config/private/prelude.hh>
@@ -175,4 +176,32 @@ TEST_CASE("a pool is created with an invalid connection string", "[pool]") {
 
     REQUIRE_THROWS_AS(pool{mongocxx::uri(uristr)}, operation_exception);
 }
+
+TEST_CASE("a pool can be warmed up", "[pool]") {
+    instance::current();
+
+    // Test with a direct connection to one server.
+    {
+        // Create callback to track number of `ping` commands sent.
+        int num_pings = 0;
+        auto apm_opts = mongocxx::options::apm().on_command_started(
+            [&](const events::command_started_event& event) {
+                std::string command_name{event.command_name().data()};
+                if (event.command_name().compare("ping") == 0) {
+                    num_pings += 1;
+                }
+            });
+        auto client_opts =
+            test_util::add_test_server_api(mongocxx::options::client().apm_opts(apm_opts));
+        auto pool_opts = mongocxx::options::pool(client_opts);
+        // Specify only one host. The C driver will not attempt to discover other servers.
+        mongocxx::uri uri{"mongodb://localhost:27017"};
+        mongocxx::pool pool{uri, pool_opts};
+        pool.warmup(5);
+        CHECK(num_pings == 1 /* initial ping */ + 5 /* ping per client per server */);
+    }
+
+    // TODO: test with more than one server.
+}
+
 }  // namespace
